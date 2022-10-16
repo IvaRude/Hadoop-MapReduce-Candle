@@ -215,6 +215,7 @@ public class Candle extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
         Configuration conf = this.getConf();
+        conf.set("mapreduce.input.fileinputformat.split.maxsize", String.valueOf(67108864));
         String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
         parse_args(otherArgs);
 //        get_params_from_conf(conf);
