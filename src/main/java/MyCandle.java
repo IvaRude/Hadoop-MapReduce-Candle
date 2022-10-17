@@ -9,12 +9,12 @@ import static java.lang.Math.min;
 public class MyCandle {
     String slug;
     Date candle_start_time;
-    Float high;
-    Float low;
-    Float open_price;
+    float high;
+    float low;
+    float open_price;
     Date open_time;
     int open_id;
-    Float close_price;
+    float close_price;
     Date close_time;
     int close_id;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -62,13 +62,13 @@ public class MyCandle {
         this.high = max(this.high, candle.high);
         this.low = min(this.low, candle.low);
         if (candle.open_time.getTime() < this.open_time.getTime() ||
-                (candle.open_time == this.open_time && candle.open_id < this.open_id)) {
+                (candle.open_time.getTime() == this.open_time.getTime() && candle.open_id < this.open_id)) {
             this.open_id = candle.open_id;
             this.open_time = candle.open_time;
             this.open_price = candle.open_price;
         }
         if (candle.close_time.getTime() > this.close_time.getTime() ||
-                (candle.close_time == this.close_time && candle.close_id > this.close_id)) {
+                (candle.close_time.getTime() == this.close_time.getTime() && candle.close_id > this.close_id)) {
             this.close_id = candle.close_id;
             this.close_time = candle.close_time;
             this.close_price = candle.close_price;
