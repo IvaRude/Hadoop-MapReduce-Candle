@@ -14,6 +14,7 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -148,6 +149,9 @@ public class candle extends Configured implements Tool {
             }
             if (!is_satisfying_candle(candle)) return;
             String candle_key = params[0].concat(candle.dateFormat.format(candle.candle_start_time));
+
+            if (candle_key.equals("SVH120110111165500000")) System.out.println(value);
+
             if (this.candles.containsKey(candle_key)) {
                 this.candles.put(candle_key, this.candles.get(candle_key).add_data(candle));
             } else {
@@ -176,10 +180,13 @@ public class candle extends Configured implements Tool {
             String date = key.substring(key.length() - 17);
             String ans = candle.slug;
             ans = ans.concat("," + date);
-            ans = ans.concat("," + String.format("%.1f", candle.open_price));
-            ans = ans.concat("," + String.format("%.1f", candle.high));
-            ans = ans.concat("," + String.format("%.1f", candle.low));
-            ans = ans.concat("," + String.format("%.1f", candle.close_price));
+            ans = ans.concat("," + String.valueOf(BigDecimal.valueOf(candle.open_price).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue()));
+            ans = ans.concat("," + String.valueOf(BigDecimal.valueOf(candle.high).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue()));
+            ans = ans.concat("," + String.valueOf(BigDecimal.valueOf(candle.low).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue()));
+//            ans = ans.concat("," + String.format("%.1f", candle.high));
+//            ans = ans.concat("," + String.format("%.1f", candle.low));
+            ans = ans.concat("," + String.valueOf(BigDecimal.valueOf(candle.close_price).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue()));
+//            ans = ans.concat("," + String.format("%.1f", candle.close_price));
             return new Text(ans);
         }
 
