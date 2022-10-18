@@ -149,9 +149,6 @@ public class candle extends Configured implements Tool {
             }
             if (!is_satisfying_candle(candle)) return;
             String candle_key = params[0].concat(candle.dateFormat.format(candle.candle_start_time));
-
-            if (candle_key.equals("SVH120110111165500000")) System.out.println(value);
-
             if (this.candles.containsKey(candle_key)) {
                 this.candles.put(candle_key, this.candles.get(candle_key).add_data(candle));
             } else {

@@ -9,12 +9,12 @@ import static java.lang.Math.min;
 public class MyCandle {
     String slug;
     Date candle_start_time;
-    float high;
-    float low;
-    float open_price;
+    double high;
+    double low;
+    double open_price;
     Date open_time;
     int open_id;
-    float close_price;
+    double close_price;
     Date close_time;
     int close_id;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -26,7 +26,7 @@ public class MyCandle {
     public MyCandle(String[] params, int candle_width) throws ParseException {
         this.slug = params[0];
         this.candle_start_time = find_candle_start_time(params[2], candle_width);
-        this.high = Float.parseFloat(params[4]);
+        this.high = Double.parseDouble(params[4]);
         this.low = this.high;
         this.open_price = this.high;
         this.open_time = dateFormat.parse(params[2]);
@@ -39,7 +39,7 @@ public class MyCandle {
     public MyCandle(HashMap<String, String> params, int candle_width) throws ParseException {
         this.slug = params.get("slug");
         this.candle_start_time = find_candle_start_time(params.get("date"), candle_width);
-        this.high = Float.parseFloat(params.get("price"));
+        this.high = Double.parseDouble(params.get("price"));
         this.low = this.high;
         this.open_price = this.high;
         this.open_time = dateFormat.parse(params.get("date"));
@@ -93,12 +93,12 @@ public class MyCandle {
         MyCandle candle = new MyCandle();
         String[] params = string.toString().split(",");
         candle.slug = params[0];
-        candle.high = Float.parseFloat(params[1]);
-        candle.low = Float.parseFloat(params[2]);
-        candle.open_price = Float.parseFloat(params[3]);
+        candle.high = Double.parseDouble(params[1]);
+        candle.low = Double.parseDouble(params[2]);
+        candle.open_price = Double.parseDouble(params[3]);
         candle.open_time = candle.dateFormat.parse(params[4]);
         candle.open_id = Integer.parseInt(params[5]);
-        candle.close_price = Float.parseFloat(params[6]);
+        candle.close_price = Double.parseDouble(params[6]);
         candle.close_time = candle.dateFormat.parse(params[7]);
         candle.close_id = Integer.parseInt(params[8]);
         return candle;
