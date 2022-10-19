@@ -142,7 +142,6 @@ public class candle extends Configured implements Tool {
             String[] params = value.toString().split(",");
             MyCandle candle = null;
             try {
-//                candle = new MyCandle(params, candle_width);
                 candle = new MyCandle(parse_input_params(params), candle_width);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
@@ -180,10 +179,7 @@ public class candle extends Configured implements Tool {
             ans = ans.concat("," + String.valueOf(BigDecimal.valueOf(candle.open_price).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue()));
             ans = ans.concat("," + String.valueOf(BigDecimal.valueOf(candle.high).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue()));
             ans = ans.concat("," + String.valueOf(BigDecimal.valueOf(candle.low).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue()));
-//            ans = ans.concat("," + String.format("%.1f", candle.high));
-//            ans = ans.concat("," + String.format("%.1f", candle.low));
             ans = ans.concat("," + String.valueOf(BigDecimal.valueOf(candle.close_price).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue()));
-//            ans = ans.concat("," + String.format("%.1f", candle.close_price));
             return new Text(ans);
         }
 
@@ -219,14 +215,6 @@ public class candle extends Configured implements Tool {
         conf.set("mapreduce.input.fileinputformat.split.maxsize", String.valueOf(67108864));
         String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
         parse_args(otherArgs);
-//        get_params_from_conf(conf);
-//        System.out.println("num of reducers: " + conf.get("candle.num.reducers"));
-//        System.out.println("time to: " + conf.get("candle.time.to"));
-//        System.out.println("param time to: " + candle_time_to);
-
-//        System.out.println(num_of_redusers);
-
-//        conf.set("mapreduce.output.textoutputformat.separator", "");
         conf = feel_configuration(conf);
         Job job = new Job(conf, "candle");
         if (conf.get("candle.num.reducers") == null)
@@ -241,12 +229,6 @@ public class candle extends Configured implements Tool {
         job.setOutputValueClass(Text.class);
         FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
         FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
-
-//        TotalOrderPartitioner.setPartitionFile(job.getConfiguration(), new Path(args[2]));
-//        InputSampler.Sampler<Text, Text> sampler = new InputSampler.RandomSampler<>(0.01, 1000, 100);
-////        InputSampler.Sampler<Text, Text> sampler = new InputSampler.IntervalSampler<>(0.1, 1000);
-//        InputSampler.writePartitionFile(job, sampler);
-//        job.setPartitionerClass(TotalOrderPartitioner.class);
 
         return job.waitForCompletion(true) ? 0 : 1;
     }
