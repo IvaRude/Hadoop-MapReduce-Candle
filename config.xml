@@ -5,6 +5,6 @@
     </property>
     <property>
         <name>candle.num.reducers</name>
-        <value>10</value>
+        <value>30</value>
     </property>
 </configuration>
